@@ -1,0 +1,26 @@
+Arduino Uno x 1
+Wirecutter x 1:
+Mcmaster.com	part#  7660K14							$7.18
+
+Limit Switch(s) x 2:
+https://www.amazon.com/dp/B07D9C2B6J?psc=1&ref=ppx_yo2_dt_b_product_details
+			2 used, purchase qty 6					$6.59 
+
+
+Power Supply (12v 8.5A) x 1:
+Digikey		part# 2725-LM100-23B12-ND					$15.09
+
+Display x 1:
+Amazon Nextion Display 5" NX8048T050						$83.95 (there has got to be cheaper ones out there, or use a different model)
+
+A4988 Stepper Motor Drivers x 2					amazon/ebay/digikey/etc
+buck converter x 1 (12v to 5v adjustable) x 1
+
+Nema 17 stepper motors x 2					amazon/ebay/digikey/etc
+
+Extruder/Feeder: Amazon (can print one, but need bearing/spring/gear/etc)	$7.49
+https://www.amazon.com/Comgrow-Upgraded-Replacement-Aluminum-Extruder/dp/B07B5118T7/ref=sr_1_4?dchild=1&keywords=extruder+feeder&qid=1630902319&sr=8-4
+
+
+PCB/Components - not neccessary but easier for wiring. Will upload layout/schematic. Still waiting to recieve
+and test. I'm sure I made an error or 2. Is my 1st pcb layout ever.

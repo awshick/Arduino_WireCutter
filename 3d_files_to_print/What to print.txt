@@ -1,0 +1,19 @@
+Parts I drew/printed and used:
+cutter_holder v1.stl		Holds wire stripper in place. Also used to mark drill points on cutter for screw retention.
+Nema17_Mount v1.stl		90 degree mount for nema 17 stepper (cut motor)
+Cut_Link v2.stl			adjustable link from cutter to motor spin
+partA.stl			Cutter stepper spindle attachment.
+Dispaly_Stand v1.stl		45 degree flat stand for display, may need trimming for good fit.
+Display_Bezel v2.stl		bezel to go on outside of display. I currently just glue this in a few spots so it can be removed if needed.
+Feed_Stand.stl			Feed stepper stand. Used so I dont need to bolt stepper directly to surface.
+wire_guide_BOT v3.stl 		adjustable to hold boden tube from feed stepper to cutter
+wire_guide_TOP v3.stl		2nd portion of above item.
+StopSwitchDual v1.stl		Used to mount both stop switch(s) to motor.
+
+
+files under extruder folder are for the feed motor wire feed. A small bearing will be needed.
+I've used something like this instead: 
+https://www.amazon.com/Comgrow-Upgraded-Replacement-Aluminum-Extruder/dp/B07B5118T7/ref=sr_1_4?dchild=1&keywords=extruder+feeder&qid=1630902319&sr=8-4
+If link is broken, google "ender 3 extruder". Cheaper plastic versions or aluminum should work just fine.
+The gear will leave tiny teeth impressions in wire, but I've had no issues with wire. Have not found a suitable rubber variant yet.
+

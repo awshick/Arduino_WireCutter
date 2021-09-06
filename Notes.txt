@@ -1,0 +1,32 @@
+This is for 2 stepper setup only. No servo used, as wire is feed into strip point of strippers, and if to be cut stripper is simply fully closed.
+Input voltage is 12vDC, not sure of max current draw but I have an 8.5A power supply (way overkill just using what I had on hand).
+I did alot of my inital testing with a 12vdc 2amp power brick and it seemed to work just fine.
+
+I used servos in 1/2 step mode, so MS1,MS2,MS3 are needed.
+If you want to use in full step, then MS1-MS3 are not required and arduino code will need to be modified
+to remove mode selection.
+Also if you do not want to use limit switches, code will need to be adjusted for actual steps required.
+
+Videos I used to help me with this:
+Nextion Display (Huge thanks to Cheap Controls channel. Tons of Nextion stuff here!!!):
+https://www.youtube.com/watch?v=VovDHGs1zDk&t=458s
+
+Stepper wiring / usage (Thanks to Gadget Reboot channel):
+https://www.youtube.com/watch?v=V7amtlMKsXU
+
+Where this version of the ideal came of,atleast for me (Mr Innovative channel):
+https://www.youtube.com/watch?v=Jl6ZATZypAQ&t=1s
+
+Dumb things that took me way to long to figure out:
+
+Using Nextion Editor for HMI programming/layout (https://nextion.tech/nextion-editor/)
+I made my own keyboard input, because I could not figure out how to use the built-in one until I was already done.
+By then I was not going to go back and update everything.
+
+If using a different Nextion display change this by opening the WireCutter_v5.HMI file in nextion editor
+On the top ICON line (after Redo) select the 'Deivce' button to change model/orientation.
+
+The Arduino code may not be as efficient or clean as it should, but I'm not a professional so it just needs to work
+reliably. Feel free to improve on.
+
+
