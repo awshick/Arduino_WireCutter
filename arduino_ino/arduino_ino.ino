@@ -6,7 +6,7 @@
 //  My steppers are 200 full steps for a full rotation (360 degrees), so numbers below based on that.
 //  Should be the only variables that would need to be changed in code.
 int actualLength = 6.23;      //will be used in cutLoop for steps per mm      **I've calculated 623 steps for 100mm, so 623/100=6.23 which should be 1mm. Change this value as required.
-int stripSteps = 94;          //total steps needed for Cutter to make STRIP cut --will adjust depending upon wire AWG but I plan to use 22 AWG.
+int stripSteps = 89;          //total steps needed for Cutter to make STRIP cut --will adjust depending upon wire AWG but I plan to use 22 AWG.
 int feedStepMode = 3;         //step mode for feed motor. 0=Full, 1=1/2, 2=1/4, 3=1/8, 4=1/16
                               //You may want to change this for speed/efficiency depending upon the setup.
 int cutStepMode = 3;          //step mode for opening/closing cutter. 0=Full, 1=1/2, 2=1/4, 3=1/8, 4=1/16
@@ -262,6 +262,7 @@ void cutLoop() {
    delay(500);
 
   if(postStripValue > 0){   //only run if postStripValue was entered   
+   stripCutter();   //loop that will close strip cutter using stripSteps, then opens cutter
     //Code to run FEED motor for length postCut (dirPinA still set HIGH from 1st preCut)
    int postCutL = postStripValue * actualLength;       //multiply input by actualLength(int variable set at start) 
    for(int x = 0; x < postCutL; x++) {   //multiply input by 6.23 because it takes 623 steps for 100mm, so 6.23 for 1mm (+/- mm)
@@ -271,7 +272,6 @@ void cutLoop() {
      delayMicroseconds(500);
    }
    delay(500);
-    stripCutter();   //loop that will close strip cutter using stripSteps, then opens cutter
   }
   
     //Code to run CUT motor for final Cut (dirPinB still set LOW from precut)
