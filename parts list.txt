@@ -17,10 +17,10 @@ A4988 Stepper Motor Drivers x 2					amazon/ebay/digikey/etc
 buck converter x 1 (12v to 5v adjustable) x 1
 
 Nema 17 stepper motors x 2					amazon/ebay/digikey/etc
+(I opted to use 1 standard Nema 17 and 1 Nema 17 with a 5:1 gearbox built on)
 
 Extruder/Feeder: Amazon (can print one, but need bearing/spring/gear/etc)	$7.49
 https://www.amazon.com/Comgrow-Upgraded-Replacement-Aluminum-Extruder/dp/B07B5118T7/ref=sr_1_4?dchild=1&keywords=extruder+feeder&qid=1630902319&sr=8-4
 
 
-PCB/Components - not neccessary but easier for wiring. Will upload layout/schematic. Still waiting to recieve
-and test. I'm sure I made an error or 2. Is my 1st pcb layout ever.
+PCB/Components - not neccessary but easier for wiring. Will upload layout/schematic/gerber files under PCB folder.
