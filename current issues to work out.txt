@@ -4,6 +4,5 @@ I'm guessing the nextion is sending replies when usb data is being uploaded caus
 manually setting how many steps are needed to create a "strip" cut vs wire cut.
 This seems to be not exact as some cuts are cleaner than others.
 
-Also now I'm getting some binding when wire is being cut. Not enough torque on stepper to always cut
-withough skipping step(s). Since the limit switch isnt hit it keeps going and after a few skips it makes
-the cut. May try a geared servo just for more reliable / repeatable use.
+On power on stepper for cutter is jittering around for a few seconds. Suspected power draw, but with 2nd 5vdc input issue remains.
+Will continue to look for solution.
