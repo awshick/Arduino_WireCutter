@@ -6,11 +6,13 @@
 //  My steppers are 200 full steps for a full rotation (360 degrees), so numbers below based on that.
 //  Should be the only variables that would need to be changed in code.
 int actualLength = 6.23;      //will be used in cutLoop for steps per mm      **I've calculated 623 steps for 100mm, so 623/100=6.23 which should be 1mm. Change this value as required.
-int stripSteps = 89;          //total steps needed for Cutter to make STRIP cut --will adjust depending upon wire AWG but I plan to use 22 AWG.
-int feedStepMode = 3;         //step mode for feed motor. 0=Full, 1=1/2, 2=1/4, 3=1/8, 4=1/16
+int stripSteps = 475;          //total steps needed for Cutter to make STRIP cut --will adjust depending upon wire AWG but I plan to use 22 AWG.
+int feedStepMode = 1;         //step mode for feed motor. 0=Full, 1=1/2, 2=1/4, 3=1/8, 4=1/16
                               //You may want to change this for speed/efficiency depending upon the setup.
-int cutStepMode = 3;          //step mode for opening/closing cutter. 0=Full, 1=1/2, 2=1/4, 3=1/8, 4=1/16
-                              //You may want to change this for speed/efficiency depending upon the setup.                              
+int cutStepMode = 1;          //step mode for opening/closing cutter. 0=Full, 1=1/2, 2=1/4, 3=1/8, 4=1/16
+                              //You may want to change this for speed/efficiency depending upon the setup.  
+                               
+//**9/6/21 changed 'stripSteps' and 'stepMode' to 1 from 3, to test 5:1 geared stepper for cutter.                           
                 
 //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -57,14 +59,35 @@ int vStep = 0;                //Steps to take
 String sMotor = "";
 int intPinA = 0;              //will be used for cutter stop switch for cutting
 int intPinB = 0;              //will be used for cutter stop switch for opening
+int openLimit = 14;           //default open limit is set to 14 for A0 - will change if A1 is hit instead using defineLimit()
+int closeLimit = 15;          //default close limit is set to 15 for A1 - will change if A0 is hit instead using defineLimit()
 
+
+ 
 //-----------------------------------------------------------------------------------------------
 
 void setup() {
  Serial.begin(9600);    //used to monitor - arduino recieve
  digitalWrite(enablePinA,HIGH); //disable driveA
  digitalWrite(enablePinB,HIGH); //disable driveB
-   //Update actualLength based on step mode (if 1/4 step then it wont be the same as if full step)
+ pinMode(2, OUTPUT);
+  digitalWrite(2, HIGH);   //setting these so stepper disabled on startup to prevent chatter movement
+ pinMode(3, OUTPUT);
+ pinMode(4, OUTPUT);
+ pinMode(5, OUTPUT);
+ pinMode(6, OUTPUT);
+ pinMode(7, OUTPUT);
+ pinMode(8, OUTPUT);
+  digitalWrite(8, HIGH);   //setting these so stepper disabled on startup to prevent chatter movement
+ pinMode(9, OUTPUT);
+ pinMode(10, OUTPUT);
+ pinMode(11, OUTPUT);
+ pinMode(12, OUTPUT);
+ pinMode(13, OUTPUT);
+ pinMode(14, INPUT);  //using Analog 0 as digital I/O for cutter open stop switch
+ pinMode(15, INPUT);  //using Analog 1 as digital I/O for cutter close stop switch
+ 
+//Update actualLength based on step mode (if 1/4 step then it wont be the same as if full step)
 if(cutStepMode==1){
   actualLength=actualLength * 2;
   stripSteps=stripSteps * 2;
@@ -78,21 +101,10 @@ if(cutStepMode==1){
   actualLength=actualLength * 16;
   stripSteps=stripSteps * 16;
 }
-
- pinMode(2, OUTPUT);
- pinMode(3, OUTPUT);
- pinMode(4, OUTPUT);
- pinMode(5, OUTPUT);
- pinMode(6, OUTPUT);
- pinMode(7, OUTPUT);
- pinMode(8, OUTPUT);
- pinMode(9, OUTPUT);
- pinMode(10, OUTPUT);
- pinMode(11, OUTPUT);
- pinMode(12, OUTPUT);
- pinMode(13, OUTPUT);
- pinMode(14, INPUT);  //using Analog 0 as digital I/O for cutter open stop switch
- pinMode(15, INPUT);  //using Analog 1 as digital I/O for cutter close stop switch
+ defineLimit(); //update/verify limit switch assignment
+ delay(1000);
+ closeCutter();
+ delay(1000);
  openCutter();  //open cutter to 0 position 
 }
 
@@ -566,7 +578,7 @@ void steptst() {
    if(vDirection=="DIN") {    //motor is being stepped in CW direction (cut)
     digitalWrite(dirPinB,HIGH);
     for(int x = 0; x < vStep; x++) {
-      intPinA = digitalRead(15);  //get A1 switch state 1=OPEN 0=CLOSED
+      intPinA = digitalRead(closeLimit);  //get A1 switch state 1=OPEN 0=CLOSED
       if(intPinA==1){   //switch is OPEN so step motor
         digitalWrite(stepPinB,HIGH);
         delayMicroseconds(500);         
@@ -590,7 +602,7 @@ void steptst() {
    }else {    //motor is being stepped in CCW direction (open)
     digitalWrite(dirPinB,LOW);
     for(int x = 0; x < vStep; x++) {
-      intPinB = digitalRead(14);
+      intPinB = digitalRead(openLimit);
       if(intPinB==1){   //switch is OPEN so step motor
         digitalWrite(stepPinB,HIGH);
         delayMicroseconds(500);         
@@ -614,7 +626,7 @@ void steptst() {
    }
    
    digitalWrite(enablePinB,HIGH); //disable driveB
-   delay(1000);
+   delay(500);
  }
 }
 //------------------------------------------------------------------------------------
@@ -645,7 +657,7 @@ void openCutter() {
    digitalWrite(enablePinB,LOW); //enable driveB
    digitalWrite(dirPinB,LOW);     //will be turning CCW
    for(int x = 0; x < 5000; x++) {      //putting in stupid high number for steps, as we will utilize switch for stop  
-    intPinB = digitalRead(14); //get A0 state LOW/HIGH
+    intPinB = digitalRead(openLimit); //get A0 state LOW/HIGH
     if(intPinB == 1) {       //switch has not been hit so run
      digitalWrite(stepPinB,HIGH);
      delayMicroseconds(500);         
@@ -655,7 +667,7 @@ void openCutter() {
       digitalWrite(dirPinB,HIGH);   //reverse to CW direction to move off of switch
       delay(500);
       while(intPinB != 1) {    //move until switch goes back to open
-       intPinB = digitalRead(14);  //re-read A0 state for change 
+       intPinB = digitalRead(openLimit);  //re-read A0 state for change 
        digitalWrite(stepPinB,HIGH);
        delayMicroseconds(800);         
        digitalWrite(stepPinB,LOW);
@@ -695,7 +707,7 @@ void closeCutter() {
    digitalWrite(enablePinB,LOW); //enable driveB
    digitalWrite(dirPinB,HIGH);    //will be turning CW
    for(int x = 0; x < 5000; x++) {      //putting in stupid high number for steps, as we will utilize switch for stop
-    intPinA = digitalRead(15); //get A1 state LOW/HIGH
+    intPinA = digitalRead(closeLimit); //get A1 state LOW/HIGH
     if(intPinA == 1) {       //switch has not been hit so run
      digitalWrite(stepPinB,HIGH);
      delayMicroseconds(500);         
@@ -705,7 +717,7 @@ void closeCutter() {
       digitalWrite(dirPinB,LOW);   //reverse to CCW direction to move off of switch
       delay(500);
       while(intPinA != 1) {    //move until switch goes back to open
-       intPinA = digitalRead(15);  //re-read A5 state for change 
+       intPinA = digitalRead(closeLimit);  //re-read A5 state for change 
        digitalWrite(stepPinB,HIGH);
        delayMicroseconds(800);         
        digitalWrite(stepPinB,LOW);
@@ -745,7 +757,8 @@ void stripCutter() {
    digitalWrite(enablePinB,LOW); //enable driveB
    digitalWrite(dirPinB,HIGH);    //will be turning CW
    for(int x = 0; x < stripSteps; x++) {      
-    intPinA = digitalRead(15); //get A1 state LOW/HIGH
+    //intPinA = digitalRead(15); //get A1 state LOW/HIGH
+    intPinA = digitalRead(closeLimit); //get A1 state LOW/HIGH
     if(intPinA == 1) {       //switch has not been hit so run
      digitalWrite(stepPinB,HIGH);
      delayMicroseconds(500);         
@@ -755,7 +768,7 @@ void stripCutter() {
       digitalWrite(dirPinB,LOW);   //reverse to CCW direction to move off of switch
       delay(500);
       while(intPinA != 1) {    //move until switch goes back to open
-       intPinA = digitalRead(15);  //re-read A5 state for change 
+       intPinA = digitalRead(closeLimit);  //re-read A1 state for change 
        digitalWrite(stepPinB,HIGH);
        delayMicroseconds(800);         
        digitalWrite(stepPinB,LOW);
@@ -764,8 +777,42 @@ void stripCutter() {
       break;    //exit loop to stop motor from cont to try and move
     }
    }
-   delay(500);
+   delay(300);
    openCutter();
    digitalWrite(enablePinB,HIGH); //disable driveB
-   delay(1000);
+   delay(300);
 }
+
+void defineLimit() {      //set open/close limit switch assignment(s). Added this because I kept plugging the switches in to the wrong connectors.
+  //We are going to spin the motor CCW until a switch is triggered, then assign that switch to the OPEN switch
+ digitalWrite(enablePinB,LOW); //enable driveB
+ digitalWrite(dirPinB,LOW);     //will be turning CCW
+ for(int x = 0;x < 10000; x++) {    //putting in for 10000 steps so plenty of steps to hit a switch, but dont want to run forever incase issue
+  intPinB = digitalRead(14);
+  intPinA = digitalRead(15);
+   if(intPinA == 1 && intPinB == 1) {       //no switch has not been hit so step
+     digitalWrite(stepPinB,HIGH);
+     delayMicroseconds(500);         
+     digitalWrite(stepPinB,LOW);
+     delayMicroseconds(500);
+    }else {     //a limit switch has been hit
+     if(intPinA == 0) { //pin 15 (A1) was triggered, this is not the expected switch (default of pin 14 (A0)) so we will update 
+      openLimit = 15;   //be default this is set to 14
+      closeLimit = 14;
+     }
+      digitalWrite(dirPinB,HIGH);   //reverse to CW direction to move off of switch
+      delay(500);
+      while(intPinB != 1) {    //move until switch goes back to open
+       intPinB = digitalRead(14);  //re-read A0 state for change 
+       digitalWrite(stepPinB,HIGH);
+       delayMicroseconds(800);         
+       digitalWrite(stepPinB,LOW);
+       delayMicroseconds(800);
+      }
+      break;    //exit loop to stop motor from cont to try and move
+    }
+   }
+  digitalWrite(enablePinB,HIGH); //disable driveB
+  delay(500);
+}
+  
