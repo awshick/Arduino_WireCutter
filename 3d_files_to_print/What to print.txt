@@ -1,19 +1,25 @@
-Parts I drew/printed and used:
-cutter_holder v1.stl		Holds wire stripper in place. Also used to mark drill points on cutter for screw retention.
-Nema17_Mount v1.stl		90 degree mount for nema 17 stepper (cut motor)
-Cut_Link v2.stl			adjustable link from cutter to motor spin
-partA.stl			Cutter stepper spindle attachment.
-Dispaly_Stand v1.stl		45 degree flat stand for display, may need trimming for good fit.
-Display_Bezel v2.stl		bezel to go on outside of display. I currently just glue this in a few spots so it can be removed if needed.
-Feed_Stand.stl			Feed stepper stand. Used so I dont need to bolt stepper directly to surface.
-wire_guide_BOT v3.stl 		adjustable to hold boden tube from feed stepper to cutter
-wire_guide_TOP v3.stl		2nd portion of above item.
-StopSwitchDual v1.stl		Used to mount both stop switch(s) to motor.
+Printed parts:
+Nema17_5to1_mount.stl		Stepper holder for cutting. Drawn to support/mount 5:1 geared stepper
+partA.stl			Shaft attachment for cutting stepper
+StopSwitchDual.stl		Limit switch(s) mount that attaches to Nema17_5to1_mount.
+Cut_Link.stl			Link piece attaches to partA.
+Link_Spacer.stl			Spacer from Cut_Link to actual cutter.
+cutter_holder.stl		Mount for actual cutter.
+wire_guide_BOT.stl		Guide/mount for wire tube to cutter 
+wire_guide_TOP.stl		Guide/mount for wire tube to cutter 
+Feed_Stand.stl			Stepper holder for wire feed stepper.
+Display_Stand.stl		Crude holder for Nextion 5" screen.
+Display_Bezel.stl		Bezel for Display_Stand
+
+Parts in folder 'misc_plasticbox' are basic spacers needed for my build. These are basically simple standoffs.
+Not needed unless using exact same box for mounting:
+https://www.amazon.com/gp/product/B0781D5YJH/ref=ppx_yo_dt_b_asin_title_o00_s01?ie=UTF8&psc=1
 
 
 files under extruder folder are for the feed motor wire feed. A small bearing will be needed.
 I've used something like this instead: 
-https://www.amazon.com/Comgrow-Upgraded-Replacement-Aluminum-Extruder/dp/B07B5118T7/ref=sr_1_4?dchild=1&keywords=extruder+feeder&qid=1630902319&sr=8-4
+https://www.amazon.com/gp/product/B07FKD4FZD/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1
+
 If link is broken, google "ender 3 extruder". Cheaper plastic versions or aluminum should work just fine.
 The gear will leave tiny teeth impressions in wire, but I've had no issues with wire. Have not found a suitable rubber variant yet.
 
