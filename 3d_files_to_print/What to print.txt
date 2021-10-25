@@ -12,7 +12,7 @@ Printed parts:
 -Display_Stand.stl		Crude holder for Nextion 5" screen.
 -Display_Bezel.stl		Bezel for Display_Stand
 
-Parts in folder 'misc_plasticbox' are basic spacers needed for my build. These are basically simple standoffs.
+Parts in folder 'misc_plasticbox' are basic spacers needed for my build. These are basically simple standoffs/fan mount:
 Not needed unless using exact same box for mounting:
 https://www.amazon.com/gp/product/B0781D5YJH/ref=ppx_yo_dt_b_asin_title_o00_s01?ie=UTF8&psc=1
 
