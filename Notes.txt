@@ -1,3 +1,9 @@
+10/24/2021:
+I've made a few modifications, mostly cosmetic. I've mounted everything on a plastic box, and housed the electronics within it.
+I've recieve no contact, so not sure anyone is even following this. If you are reading this and want to make one - reach out to me and I'll give you all the help I can.
+If you've emailed me and no response, may have gone to spam. Try me at garzajd3@gmail.com (I check this frequently).
+
+
 This is for 2 stepper setup only. No servo used, as wire is feed into strip point of strippers, and if to be cut stripper is simply fully closed.
 Input voltage is 12vDC, not sure of max current draw but I have an 8.5A power supply (way overkill just using what I had on hand).
 I did alot of my inital testing with a 12vdc 2amp power brick and it seemed to work just fine.
