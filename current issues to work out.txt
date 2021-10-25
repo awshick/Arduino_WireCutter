@@ -1,8 +1,0 @@
-If arduino update / change is needed must unplug nextion display.
-I'm guessing the nextion is sending replies when usb data is being uploaded causing error.
-
-manually setting how many steps are needed to create a "strip" cut vs wire cut.
-This seems to be not exact as some cuts are cleaner than others.
-
-On power on stepper for cutter is jittering around for a few seconds. Suspected power draw, but with 2nd 5vdc input issue remains.
-Will continue to look for solution.
