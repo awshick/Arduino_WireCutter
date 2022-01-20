@@ -1,0 +1,5 @@
+My setup uses : with_limit_switch.ino
+
+should be good: MultiPurposePCBv2 
+
+need to test: no_limit_switch

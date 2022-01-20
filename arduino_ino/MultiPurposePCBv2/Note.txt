@@ -1,0 +1,4 @@
+This setup is based on using the 
+Multipurpose v2.0 pcb used in Mr Innovative design.
+https://oshwlab.com/sharmaz747/multipurpose-pcb
+
