@@ -5,7 +5,7 @@
 //  These may change depending upon the setup: Stepper steps for rotation, Stepper mode, etc
 //  My steppers are 200 full steps for a full rotation (360 degrees), so numbers below based on that.
 //  Should be the only variables that would need to be changed in code.
-int actualLength = 6.23;      //will be used in cutLoop for steps per mm      **I've calculated 623 steps for 100mm, so 623/100=6.23 which should be 1mm. Change this value as required.
+float actualLength = 6.23;      //will be used in cutLoop for steps per mm      **I've calculated 623 steps for 100mm, so 623/100=6.23 which should be 1mm. Change this value as required.
 int stripSteps = 375;          //total steps needed for Cutter to make STRIP cut --will adjust depending upon wire AWG but I plan to use 22 AWG(red).
 int feedStepMode = 1;         //step mode for feed motor. 0=Full, 1=1/2, 2=1/4, 3=1/8, 4=1/16
                               //You may want to change this for speed/efficiency depending upon the setup.
@@ -68,6 +68,7 @@ int closeLimit = 15;          //default close limit is set to 15 for A1 - will c
 
 void setup() {
  Serial.begin(9600);    //used to monitor - arduino recieve
+ 
  digitalWrite(enablePinA,HIGH); //disable driveA
  digitalWrite(enablePinB,HIGH); //disable driveB
  pinMode(2, OUTPUT);
@@ -254,10 +255,11 @@ void cutLoop() {
      
    if(preStripValue > 0){   //only run if preStripValue was entered
     //Code to run FEED motor for preCut Strip Cut
-    int preCutL = preStripValue * actualLength;       //multiply input by actualLength(int variable set at start)
+    float preCutL = preStripValue * actualLength;       //multiply input by actualLength(int variable set at start)
+    int newPreCutL = round(preCutL);
     digitalWrite(dirPinA,LOW);         //set feed direction to CCW to feed wire
     digitalWrite(enablePinA,LOW);      //enable feed driver
-    for(int x = 0; x < preCutL; x++) {   
+    for(int x = 0; x < newPreCutL; x++) {   
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         //this controls the speed of the turn. 500 is pretty smooth but 900 is slower
      digitalWrite(stepPinA,LOW);
@@ -269,8 +271,11 @@ void cutLoop() {
    }
    
     //Code to run FEED motor for actual Length (dirPinA still set HIGH from 1st preCut)
-    int cutL = lengthValue * actualLength;       //multiply input by actualLength(int variable set at start)
-    for(int x = 0; x < cutL; x++) {  //multiply input by 6.23 because it takes 623 steps for 100mm, so 6.23 for 1mm (+/- mm)
+    //int cutL = lengthValue * actualLength;       //multiply input by actualLength(int variable set at start)
+    float cutL = lengthValue * actualLength;
+    int newCutL = round(cutL);  //round to whole number for loop below
+       
+    for(int x = 0; x < newCutL; x++) {  //multiply input by 6.23 because it takes 623 steps for 100mm, so 6.23 for 1mm (+/- mm)
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         //this controls the speed of the turn. 500 is pretty smooth but 900 is slower
      digitalWrite(stepPinA,LOW);
@@ -281,8 +286,9 @@ void cutLoop() {
   if(postStripValue > 0){   //only run if postStripValue was entered   
    stripCutter();   //loop that will close strip cutter using stripSteps, then opens cutter
     //Code to run FEED motor for length postCut (dirPinA still set HIGH from 1st preCut)
-   int postCutL = postStripValue * actualLength;       //multiply input by actualLength(int variable set at start) 
-   for(int x = 0; x < postCutL; x++) {   //multiply input by 6.23 because it takes 623 steps for 100mm, so 6.23 for 1mm (+/- mm)
+   float postCutL = postStripValue * actualLength;       //multiply input by actualLength(int variable set at start) 
+   int newPostCutL = round(postCutL);
+   for(int x = 0; x < newPostCutL; x++) {   //multiply input by 6.23 because it takes 623 steps for 100mm, so 6.23 for 1mm (+/- mm)
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         //this controls the speed of the turn. 500 is pretty smooth but 900 is slower
      digitalWrite(stepPinA,LOW);
