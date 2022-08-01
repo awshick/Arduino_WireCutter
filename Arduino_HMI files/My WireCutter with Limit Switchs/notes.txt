@@ -1,0 +1,4 @@
+8/1/22:
+Modified arduino code to adjust length value. Was set to an integer, so if you entered 10.5 it was taking the whole number only (10).
+Changed all associated values to float. As the entry is broken into steps (not distance) it will still be a whole number (rounded) for
+the loop portion. This should be a closer match to the input length, but still will not be exact.

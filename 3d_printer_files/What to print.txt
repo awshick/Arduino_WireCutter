@@ -1,0 +1,26 @@
+Printed parts:
+-Nema17_5to1_mount.stl		Stepper holder for cutting. Drawn to support/mount 5:1 geared stepper
+-partA_5-1_geared.stl		Shaft attachment for cutting stepper
+-StopSwitchDual.stl		Limit switch(s) mount that attaches to Nema17_5to1_mount.
+-limitSW_guide.stl		Cover for limit switch to prevent vertical bending.
+-Cut_Link.stl			Link piece attaches to partA.
+-Link_Spacer.stl		Spacer from Cut_Link to actual cutter.
+-cutter_holder_adj.stl		Mount for actual cutter.
+-wire_guide_BOT.stl		Guide/mount for wire tube to cutter 
+-wire_guide_TOP.stl		Guide/mount for wire tube to cutter 
+-Feed_Stand.stl			Stepper holder for wire feed stepper.
+-Display_Stand.stl		Crude holder for Nextion 5" screen.
+-Display_Bezel.stl		Bezel for Display_Stand
+
+Parts in folder 'misc_plasticbox' are basic spacers needed for my build. These are basically simple standoffs/fan mount:
+Not needed unless using exact same box for mounting:
+https://www.amazon.com/gp/product/B0781D5YJH/ref=ppx_yo_dt_b_asin_title_o00_s01?ie=UTF8&psc=1
+
+
+files under extruder folder are for the feed motor wire feed. A small bearing will be needed.
+I've used something like this instead: 
+https://www.amazon.com/gp/product/B07FKD4FZD/ref=ppx_yo_dt_b_asin_title_o00_s00?ie=UTF8&psc=1
+
+If above link is broken, google "ender 3 extruder". Cheaper plastic versions or aluminum should work just fine.
+The gear will leave tiny teeth impressions in wire, but I've had no issues with wire. Have not found a suitable rubber variant yet.
+
