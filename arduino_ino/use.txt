@@ -1,8 +1,0 @@
-My setup uses : with_limit_switch.ino
-
-If using Mr.Innovative's MultiPurposePCBv2 , will want to use arduino file in 'MultiPuposePCBv2' folder.
-**this setup does NOT use limit switches, can be added but it is not in the code.
-
-If not using limit switches and Mr.Innovatives pcb board then use arduino file in 'no_limit_switch' folder.
-Fair warning, I have not tested this - and pretty sure its not ready for use as-is. Code needs cleaning for 
-limit switch removal.
