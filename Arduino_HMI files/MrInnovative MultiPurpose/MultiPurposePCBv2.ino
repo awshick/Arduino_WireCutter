@@ -5,7 +5,8 @@
 //  These may change depending upon the setup: Stepper steps for rotation, Stepper mode, etc
 //  My steppers are 200 full steps for a full rotation (360 degrees), so numbers below based on that.
 //  Should be the only variables that would need to be changed in code.
-int actualLength = 6.23;      //will be used in cutLoop for steps per mm      **I've calculated 623 steps for 100mm, so 623/100=6.23 which should be 1mm. Change this value as required.
+float actualLength = 6.23;      //will be used in cutLoop for steps per mm      **I've calculated 623 steps for 100mm, so 623/100=6.23 which should be 1mm. Change this value as required.
+int aCycle = round(actualLength); //dont change this line, used in loops for Cut loop, Feed loop, Load assist loop, Testing Motors loop - loops should be whole numbers only.
 //<-----Making the below values big for testing. 200 steps should be a full 360° spin----->
 int stripSteps = 200;          //total steps needed for Cutter to make STRIP cut --will need to adjust depending upon wire AWG and your setup.
 int cutOpenSteps = 400;        //Steps to open cutters from a close (cut) position
@@ -202,9 +203,10 @@ void cutLoop() {
  //----1st Strip Cut (if required)----
    if(preStripValue > 0){                             //only run this part if preStripValue was entered.
     //Code to run FEED motor for preCut Strip Cut
-    int preCutL = preStripValue * actualLength;       //multiply input by actualLength(int variable set at start)
+    float preCutL = preStripValue * actualLength;       //multiply input by actualLength(int variable set at start)
+    int newCutL = round(preCutL);                     //round to whole number for loop below     
     digitalWrite(stepADir,HIGH);                      //set feed direction to CCW to feed wire
-    for(int x = 0; x < preCutL; x++) {                //This is the stepper loop that will 'pulse' or 'step' the motor 
+    for(int x = 0; x < newCutL; x++) {                //This is the stepper loop that will 'pulse' or 'step' the motor 
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);                          //this controls the speed of the turn. 500 is pretty smooth but 900 is slower. Can adjust all of these delays if desired.
      digitalWrite(stepAStep,LOW);
@@ -231,8 +233,9 @@ void cutLoop() {
 
     
  //Run FEED motor for actual Length 
-    int cutL = lengthValue * actualLength;            //multiply input by actualLength(int variable set at start)
-    for(int x = 0; x < cutL; x++) {              
+    float cutL = lengthValue * actualLength;            //multiply input by actualLength(int variable set at start)
+    int newCutL = round(cutL);                //round to whole number for loop below  
+    for(int x = 0; x < newCutL; x++) {              
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);                     
      digitalWrite(stepAStep,LOW);
@@ -259,9 +262,10 @@ void cutLoop() {
      delayMicroseconds(450);
     }
    //Feed out post strip length
-    int postCutL = postStripValue * actualLength;     //multiply input by actualLength(int variable set at start)
+    float postCutL = postStripValue * actualLength;     //multiply input by actualLength(int variable set at start)
+    int newPostCutL = round(postCutL);                //round to whole number for loop below  
     digitalWrite(stepADir,HIGH);                      //set feed direction to CCW to feed wire
-    for(int x = 0; x < postCutL; x++) {               //This is the stepper loop that will 'pulse' or 'step' the motor 
+    for(int x = 0; x < newPostCutL; x++) {               //This is the stepper loop that will 'pulse' or 'step' the motor 
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);                          //this controls the speed of the turn. 500 is pretty smooth but 900 is slower. Can adjust all of these delays if desired.
      digitalWrite(stepAStep,LOW);
@@ -324,7 +328,7 @@ void feedLoop() {
     digitalWrite(stepADir,LOW);        //spin CW
   }
   if(vLength==001){
-    for(int x = 0; x < (1 * actualLength); x++) {   
+    for(int x = 0; x < (1 * aCycle); x++) {   
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);         
      digitalWrite(stepAStep,LOW);
@@ -332,7 +336,7 @@ void feedLoop() {
    }
   }
   if(vLength==10){
-    for(int x = 0; x < (10 * actualLength); x++) {   
+    for(int x = 0; x < (10 * aCycle); x++) {   
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);         
      digitalWrite(stepAStep,LOW);
@@ -340,7 +344,7 @@ void feedLoop() {
    }
  }
  if(vLength==100){
-    for(int x = 0; x < (100 * actualLength); x++) {   
+    for(int x = 0; x < (100 * aCycle); x++) {   
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);         
      digitalWrite(stepAStep,LOW);
@@ -364,7 +368,7 @@ void loadAssist() {
   digitalWrite(stepEnable,LOW);                    //enable drivers
   //run feed motor
    digitalWrite(stepADir,HIGH);                     //spin CCW
-    for(int x = 0; x < (80 * actualLength); x++) {    //feed ~80mm of wire
+    for(int x = 0; x < (80 * aCycle); x++) {    //feed ~80mm of wire
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);         
      digitalWrite(stepAStep,LOW);
@@ -391,7 +395,7 @@ void testLoop() {
   digitalWrite(stepEnable,LOW);                      //enable drivers
   //Code to run FEED motor Counter Clockwise
    digitalWrite(stepADir,HIGH);  
-    for(int x = 0; x < (100 * actualLength); x++) {   
+    for(int x = 0; x < (100 * aCycle); x++) {   
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);         
      digitalWrite(stepAStep,LOW);
@@ -400,7 +404,7 @@ void testLoop() {
    digitalWrite(stepADir,LOW);
    delay(1000);
    //Code to run FEED motor Clockwise
-    for(int x = 0; x < (100 * actualLength); x++) {   
+    for(int x = 0; x < (100 * aCycle); x++) {   
      digitalWrite(stepAStep,HIGH);
      delayMicroseconds(450);         
      digitalWrite(stepAStep,LOW);
