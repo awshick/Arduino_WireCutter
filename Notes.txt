@@ -1,3 +1,9 @@
+8/1/2022:
+Modified arduino code(s) for wire length loops. Previously if entering non whole number it would ignore the decimal point on the final length value.
+I have it now including the decimal value in the calculation, but still uses a whole number for the step loops - so accuraccy is not 100% but tolerance is alot better now. 
+Example - previously was using a calculation of 6.23 stepper motor steps to equal 1mm of wire. If input was for a 100.5mm length it would be should be converted to 
+626.115 (100.5 * 6.23). However as it was an integer you would actually get 626 steps. Error would drift more or less depending upon wire length desired. 
+
 10/24/2021:
 I've made a few modifications, mostly cosmetic. I've mounted everything on a plastic box, and housed the electronics within it.
 I've recieve no contact, so not sure anyone is even following this. If you are reading this and want to make one - reach out to 
