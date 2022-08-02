@@ -6,6 +6,7 @@
 //  My steppers are 200 full steps for a full rotation (360 degrees), so numbers below based on that.
 //  Should be the only variables that would need to be changed in code.
 float actualLength = 6.23;      //will be used in cutLoop for steps per mm      **I've calculated 623 steps for 100mm, so 623/100=6.23 which should be 1mm. Change this value as required.
+int aCycle = round(actualLength); //will be used in test loops as whole number is needed in for loops
 int stripSteps = 375;          //total steps needed for Cutter to make STRIP cut --will adjust depending upon wire AWG but I plan to use 22 AWG(red).
 int feedStepMode = 1;         //step mode for feed motor. 0=Full, 1=1/2, 2=1/4, 3=1/8, 4=1/16
                               //You may want to change this for speed/efficiency depending upon the setup.
@@ -92,15 +93,19 @@ void setup() {
 if(cutStepMode==1){
   actualLength=actualLength * 2;
   stripSteps=stripSteps * 2;
+  aCycle = aCycle * 2;
 }else if(cutStepMode==2) {
   actualLength=actualLength * 4;
   stripSteps=stripSteps * 4;
+  aCycle = aCycle * 4;
 }else if(cutStepMode==3) {
   actualLength=actualLength * 8;
   stripSteps=stripSteps * 8;
+  aCycle = aCycle * 8;
 }else if(cutStepMode==4) {
   actualLength=actualLength * 16;
   stripSteps=stripSteps * 16;
+  aCycle = aCycle * 16;
 }
 
  delay(500);
@@ -368,8 +373,10 @@ void feedLoop() {
   else{
     digitalWrite(dirPinA,HIGH);  //spin CW
   }
+
+
   if(vLength==001){
-    for(int x = 0; x < (1 * actualLength); x++) {   
+    for(int x = 0; x < (1 * aCycle); x++) {   
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         //this controls the speed of the turn. 500 is pretty smooth but 900 is slower
      digitalWrite(stepPinA,LOW);
@@ -378,7 +385,7 @@ void feedLoop() {
   }
 
   if(vLength==10){
-    for(int x = 0; x < (10 * actualLength); x++) {   
+    for(int x = 0; x < (10 * aCycle); x++) {   
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         //this controls the speed of the turn. 500 is pretty smooth but 900 is slower
      digitalWrite(stepPinA,LOW);
@@ -387,7 +394,7 @@ void feedLoop() {
  }
   
  if(vLength==100){
-    for(int x = 0; x < (100 * actualLength); x++) {   
+    for(int x = 0; x < (100 * aCycle); x++) {   
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         //this controls the speed of the turn. 500 is pretty smooth but 900 is slower
      digitalWrite(stepPinA,LOW);
@@ -435,7 +442,7 @@ void loadAssist() {
   digitalWrite(enablePinA,LOW); //enable driveA
   //run feed motor
    digitalWrite(dirPinA,LOW);  //spin CCW
-    for(int x = 0; x < (80 * actualLength); x++) {    //feed ~80mm of wire
+    for(int x = 0; x < (80 * aCycle); x++) {    //feed ~80mm of wire
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         //this controls the speed of the turn. 500 is pretty smooth but 900 is slower
      digitalWrite(stepPinA,LOW);
@@ -482,7 +489,7 @@ void testLoop() {
    digitalWrite(enablePinA,LOW); //enable driveA
    //Code to run FEED motor Counter Clockwise
    digitalWrite(dirPinA,LOW);  
-    for(int x = 0; x < (100 * actualLength); x++) {   
+    for(int x = 0; x < (100 * aCycle); x++) {   
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         
      digitalWrite(stepPinA,LOW);
@@ -491,7 +498,7 @@ void testLoop() {
    digitalWrite(dirPinA,HIGH);
    delay(1000);
    //Code to run FEED motor Clockwise
-    for(int x = 0; x < (100 * actualLength); x++) {   
+    for(int x = 0; x < (100 * aCycle); x++) {   
      digitalWrite(stepPinA,HIGH);
      delayMicroseconds(500);         
      digitalWrite(stepPinA,LOW);
